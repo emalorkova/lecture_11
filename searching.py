@@ -38,15 +38,41 @@ def linear_search(seq, cislo): #najlepsia aj najhorsia zlozitost je O(n)
     }
 
 
-def pattern_search(sequence, pattern): #najlepsia aj najhorsia zlozitost je O(n*m)
+def pattern_search(sequence, pattern): #najlepsia aj najhorsia zlozitost je O(n*m), O(n) a O(n*m)
     pozicie = set()
     pattern_len = len(pattern)
+    left = 0
+    right = pattern_len
 
-    for i in range(len(sequence)):
-        if pattern == sequence[i:i+pattern_len]:
-            pozicie.add((i + pattern_len)//2)
+    while right < len(sequence):
+         for idx_pattern in range(pattern_len):
+             if pattern[idx_pattern] != sequence[left + idx_pattern]:
+                 break
+         else:
+             pozicie.add((left + pattern_len) // 2)
+
+         left += 1
+         right += 1
 
     return pozicie
+
+
+def binary_search(zoznam, cislo):
+    left = 0
+    len_zoznam = len(zoznam) - 1
+    right = len_zoznam
+    
+    while left <= right:
+        middle = (left + right) // 2
+
+        if zoznam[middle] == cislo:
+            return middle
+        elif zoznam[middle] < cislo:
+            left = middle + 1
+        elif zoznam[middle] > cislo:
+            right = middle - 1
+
+    return None
 
 
 def main():
@@ -59,6 +85,12 @@ def main():
     sequential_data = read_data("sequential.json", "dna_sequence")
     result_2 = pattern_search(sequential_data, "ATA")
     print(result_2)
+
+    sequential_data = read_data("sequential.json", "ordered_numbers")
+    print(sequential_data)
+    result_3 = binary_search(sequential_data, 21)
+    print(result_3)
+
 
 
 
