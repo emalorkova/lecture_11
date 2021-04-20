@@ -23,7 +23,7 @@ def read_data(file_name, field):
     return dict[field]
 
 
-def linear_search(seq, cislo):
+def linear_search(seq, cislo): #najlepsia aj najhorsia zlozitost je O(n)
     positions = []
     count = 0
 
@@ -38,6 +38,15 @@ def linear_search(seq, cislo):
     }
 
 
+def pattern_search(sequence, pattern): #najlepsia aj najhorsia zlozitost je O(n*m)
+    pozicie = set()
+    pattern_len = len(pattern)
+
+    for i in range(len(sequence)):
+        if pattern == sequence[i:i+pattern_len]:
+            pozicie.add((i + pattern_len)//2)
+
+    return pozicie
 
 
 def main():
@@ -46,6 +55,11 @@ def main():
 
     result_1 = linear_search(sequential_data, 9)
     print(result_1)
+
+    sequential_data = read_data("sequential.json", "dna_sequence")
+    result_2 = pattern_search(sequential_data, "ATA")
+    print(result_2)
+
 
 
 if __name__ == '__main__':
